@@ -1,0 +1,17 @@
+name: GemManager
+author: br456
+version: 1.5
+description: Description
+main: me.br456.Gem.Gem
+softdepend: [Vault]
+commands:
+  gem:
+permissions:
+  gem.emerald.deposit:
+    default: op
+  gem.emerald.withdraw:
+    default: op
+  gem.create.emerald:
+    default: op
+  gem.admin.command:
+    default: op

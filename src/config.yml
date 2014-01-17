@@ -1,0 +1,54 @@
+Amount of gems per emerald: 1
+Auto-Update: true
+
+Mob Drops:
+  Enabled: false
+  Zombie:
+    Min: 0
+    Max: 2
+  Skeleton:
+    Min: 0
+    Max: 2
+  Creeper:
+    Min: 0
+    Max: 2
+  Enderman:
+    Min: 1
+    Max: 3
+  Blaze:
+    Min: 1
+    Max: 3
+  Magma Cube:
+    Min: 1
+    Max: 4
+  Zombie Pigmen:
+    Min: 1
+    Max: 4
+  Slime:
+    Min: 1
+    Max: 2
+  Wither Skeleton:
+    Min: 2
+    Max: 4
+  Wither:
+    Min: 15
+    Max: 20
+  Ender Dragon:
+    Min: 20
+    Max: 30
+  Ghast:
+    Min: 1
+    Max: 3
+  Spider:
+    Min: 0
+    Max: 2
+  Cave Spider:
+    Min: 1
+    Max: 2
+  Silverfish:
+    Min: 0
+    Max: 1
+  Witch:
+    Min: 5
+    Max: 7
+  
