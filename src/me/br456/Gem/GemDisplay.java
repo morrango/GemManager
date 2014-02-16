@@ -37,7 +37,12 @@ public class GemDisplay implements Listener{
 			obj.getScore(Bukkit.getOfflinePlayer(ChatColor.GREEN + "Gems")).setScore(0);
 			
 			player.setScoreboard(board);
-		}		
+		}
+		
+		if(Gem.updateAvailable == true && player.hasPermission("gem.admin.notify.update")) {
+			player.sendMessage("A new " + ChatColor.GREEN + "GemManager" + ChatColor.WHITE + " version is available!");
+			return;
+		}
 		
 	}
 	
