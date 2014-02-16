@@ -1,6 +1,6 @@
 name: GemManager
 author: br456
-version: 1.5
+version: 1.5.2
 description: Description
 main: me.br456.Gem.Gem
 softdepend: [Vault]
@@ -14,4 +14,6 @@ permissions:
   gem.create.emerald:
     default: op
   gem.admin.command:
+    default: op
+  gem.admin.notify.update:
     default: op
