@@ -1,6 +1,7 @@
 package me.br456.Gem;
 
 import me.br456.Commands.GemCommand;
+import me.br456.Gem.Updater.UpdateResult;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Gem extends JavaPlugin{
 	
 	SettingsManager settings = SettingsManager.getInstance();
+	public static boolean updateAvailable;
 	
 	public void onEnable() {
 		settings.setup(this);
@@ -27,8 +29,10 @@ public class Gem extends JavaPlugin{
 			getServer().getLogger().info("Auto-Updates Disabled");
 			return;
 		} else {
-			@SuppressWarnings("unused")
-			Updater updater = new Updater(this, 67890, this.getFile(), Updater.UpdateType.DEFAULT, false);
+			Updater updater = new Updater(this, 67890, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+			if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+				updateAvailable = true;
+			}
 			return;
 		}
 	}
