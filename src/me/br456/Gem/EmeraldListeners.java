@@ -16,6 +16,7 @@ public class EmeraldListeners implements Listener{
 	
 	SettingsManager settings = SettingsManager.getInstance();
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
@@ -25,7 +26,8 @@ public class EmeraldListeners implements Listener{
 		if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if(player.getItemInHand().getType() == Material.EMERALD) {
 				player.sendMessage(ChatColor.GREEN + "Successfully added " + aogpe + " gems to your account!");
-				player.getInventory().remove(new ItemStack(Material.EMERALD, 1));
+				player.getInventory().removeItem(new ItemStack(Material.EMERALD, 1));
+				player.updateInventory();
 				
 				int current = settings.getData().getInt(name);
 				int newbal = current + aogpe;

@@ -1,6 +1,6 @@
 name: GemManager
 author: br456
-version: 1.5.2
+version: 1.5.3
 description: Description
 main: me.br456.Gem.Gem
 softdepend: [Vault]
