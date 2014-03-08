@@ -1,9 +1,10 @@
 name: GemManager
 author: br456
-version: 1.5.3
+version: 1.5.4
 description: Description
 main: me.br456.Gem.Gem
 softdepend: [Vault]
+loadbefore: [BossShop]
 commands:
   gem:
 permissions:

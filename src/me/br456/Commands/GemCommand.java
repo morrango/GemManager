@@ -42,7 +42,7 @@ public class GemCommand implements CommandExecutor{
 				if(args.length == 2) {
 					if(args[0].equalsIgnoreCase("reset")) {
 						String name = args[1];
-						Player target = Bukkit.getPlayer(name);
+						Player target = Bukkit.getPlayerExact(name);
 						
 						GemDisplay.updateScoreboard(target, 0);
 						
@@ -58,7 +58,7 @@ public class GemCommand implements CommandExecutor{
 					if(args[0].equalsIgnoreCase("add")) {
 						String name = args[2];
 						int current = settings.getData().getInt(name);
-						Player target = Bukkit.getPlayer(name);
+						Player target = Bukkit.getPlayerExact(name);
 						int amnt;
 						
 						try {
@@ -93,7 +93,7 @@ public class GemCommand implements CommandExecutor{
 					if(args[0].equalsIgnoreCase("sub")) {
 						String name = args[2];
 						int current = settings.getData().getInt(name);
-						Player target = Bukkit.getPlayer(name);
+						Player target = Bukkit.getPlayerExact(name);
 						int amnt;
 						
 						try {
@@ -126,7 +126,7 @@ public class GemCommand implements CommandExecutor{
 					}	
 					if(args[0].equalsIgnoreCase("set")) {
 						String name = args[2];
-						Player target = Bukkit.getPlayer(name);
+						Player target = Bukkit.getPlayerExact(name);
 						int amnt;
 						
 						try {
@@ -159,7 +159,147 @@ public class GemCommand implements CommandExecutor{
 					}
 				}
 			}		
-		}				
+		} else {
+			if(cmd.getLabel().equalsIgnoreCase("gem")) {
+				if(args.length == 0) {
+					sender.sendMessage(ChatColor.GREEN + "Commands:");
+					sender.sendMessage(ChatColor.GREEN + "	gem add <amnt> <player>");
+					sender.sendMessage(ChatColor.GREEN + "	gem sub <amnt> <player>");
+					sender.sendMessage(ChatColor.GREEN + "	gem set <amnt> <player>");
+					sender.sendMessage(ChatColor.GREEN + "	gem reset <player>");
+				}
+				
+				if(args.length > 3) {
+					sender.sendMessage(ChatColor.RED + "Too many arguments!");
+					return true;
+				}
+				
+				if(args.length == 1) {
+					sender.sendMessage(ChatColor.RED + "Must specify an amount and a player!");
+					return true;
+				}
+				
+				if(args.length == 2) {
+					if(args[0].equalsIgnoreCase("reset")) {
+						String name = args[1];
+						Player target = Bukkit.getPlayerExact(name);
+						
+						GemDisplay.updateScoreboard(target, 0);
+						
+						settings.getData().set(name, 0);
+						settings.saveData();
+						return true;						
+					}
+					sender.sendMessage(ChatColor.RED + "Must specify a player!");
+					return true;
+				}
+				
+				if(args.length == 3) {
+					if(args[0].equalsIgnoreCase("add")) {
+						String name = args[2];
+						int current = settings.getData().getInt(name);
+						Player target = Bukkit.getPlayerExact(name);
+						int amnt;
+						
+						try {
+							amnt = Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							sender.sendMessage(ChatColor.RED + args[1] + " is not a valid number!");
+							return true;
+						}
+						
+						if(amnt < 0) {
+							sender.sendMessage(ChatColor.RED + "The minimum number is 0!");
+							return true;
+						}
+						
+						if(amnt + current > 1000000) {
+							sender.sendMessage(ChatColor.RED + "The maximum number is 1,000,000!");
+							return true;
+						}
+						
+						if(target == null) {
+							sender.sendMessage(ChatColor.RED + "Can not find " + name + "!");
+							return true;
+						} else {
+							
+							GemDisplay.updateScoreboard(target, amnt + current);
+							
+							settings.getData().set(name, amnt + current);
+							settings.saveData();
+							return true;
+						}
+					}	
+					if(args[0].equalsIgnoreCase("sub")) {
+						String name = args[2];
+						int current = settings.getData().getInt(name);
+						Player target = Bukkit.getPlayerExact(name);
+						int amnt;
+						
+						try {
+							amnt = Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							sender.sendMessage(ChatColor.RED + args[1] + " is not a valid number!");
+							return true;
+						}
+						
+						if(amnt < 0) {
+							sender.sendMessage(ChatColor.RED + "Can not subtract negative numbers!");
+							return true;
+						}
+						
+						if(target == null) {
+							sender.sendMessage(ChatColor.RED + "Can not find " + name + "!");
+							return true;
+						} else {
+							if(amnt > current) {
+								sender.sendMessage(ChatColor.RED + name + " has insufficient funds!");
+								return true;
+							} else {							
+								GemDisplay.updateScoreboard(target, current - amnt);
+								
+								settings.getData().set(name, current - amnt);
+								settings.saveData();
+								return true;
+							}
+						}						
+					}	
+					if(args[0].equalsIgnoreCase("set")) {
+						String name = args[2];
+						Player target = Bukkit.getPlayerExact(name);
+						int amnt;
+						
+						try {
+							amnt = Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							sender.sendMessage(ChatColor.RED + args[1] + " is not a valid number!");
+							return true;
+						}
+						
+						if(amnt < 0) {
+							sender.sendMessage(ChatColor.RED + "The minimum number is 0!");
+							return true;
+						}
+						
+						if(amnt > 1000000) {
+							sender.sendMessage(ChatColor.RED + "The maximum number is 1,000,000!");
+							return true;
+						}
+						
+						if(target == null) {
+							sender.sendMessage(ChatColor.RED + "Can not find " + name + "!");
+							return true;
+						} else {							
+							GemDisplay.updateScoreboard(target, amnt);
+								
+							settings.getData().set(name, amnt);
+							settings.saveData();
+							return true;
+						}
+					}
+				}
+			}
+		}
         return true;
     }
 }
