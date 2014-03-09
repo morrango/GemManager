@@ -48,6 +48,7 @@ public class EmeraldListeners implements Listener{
 		 }
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onSignInteract(PlayerInteractEvent event) {
 		if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -69,6 +70,7 @@ public class EmeraldListeners implements Listener{
 						int newbal = current - config;
 						GemDisplay.updateScoreboard(player, newbal);
 						player.getInventory().addItem(new ItemStack(Material.EMERALD, 1));
+						player.updateInventory();
 						settings.getData().set(name, newbal);
 						settings.saveData();
 					}
